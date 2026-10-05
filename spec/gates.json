@@ -1,0 +1,55 @@
+{
+  "schema": "bitevo.agent-authority.gates.v1",
+  "scope": "one action-capable workflow",
+  "boundary": {
+    "trust_score": false,
+    "certification": false,
+    "testing_authorization": false,
+    "network_requests": 0
+  },
+  "states": ["YES", "NO", "UNKNOWN"],
+  "gates": [
+    {
+      "id": "authority_budget",
+      "name": "Authority Budget",
+      "question": "Can you name the exact external action this workflow is allowed to perform?",
+      "rationale": "If the consequential action is vague, the authority boundary cannot be tested."
+    },
+    {
+      "id": "object_binding",
+      "name": "Object binding",
+      "question": "Can the workflow prove which exact object the action applies to before execution?",
+      "rationale": "Correct permission on the wrong record, account or document is still the wrong effect."
+    },
+    {
+      "id": "authority_owner",
+      "name": "Authority owner",
+      "question": "Is there a named role that owns the permission to perform this action?",
+      "rationale": "Authority without an owner becomes difficult to approve, constrain or revoke."
+    },
+    {
+      "id": "evidence_before_effect",
+      "name": "Evidence Before Effect",
+      "question": "Is the minimum pre-action evidence explicitly defined?",
+      "rationale": "A workflow cannot fail closed on missing evidence if the evidence requirement is implicit."
+    },
+    {
+      "id": "freshness",
+      "name": "Freshness",
+      "question": "Does the workflow know when required evidence has become stale or invalid?",
+      "rationale": "A healthy-looking service can still be operating on truth that stopped advancing."
+    },
+    {
+      "id": "external_confirmation",
+      "name": "External confirmation",
+      "question": "Is the intended external effect independently confirmed after the action?",
+      "rationale": "Internal completion or a tool acknowledgement is not proof that the outside system reached the expected state."
+    },
+    {
+      "id": "recovery",
+      "name": "Recovery",
+      "question": "When evidence or confirmation becomes uncertain, does the workflow enter a defined constrained/recovery state?",
+      "rationale": "Retrying or continuing through ambiguity can turn one uncertain action into repeated effects."
+    }
+  ]
+}

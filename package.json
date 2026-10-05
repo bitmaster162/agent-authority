@@ -1,0 +1,10 @@
+{
+  "name": "bitevo-agent-authority-b9-candidate",
+  "version": "0.1.0-local",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check:sample": "node src/evaluate.mjs examples/synthetic-workflow.json"
+  }
+}
