@@ -1,6 +1,6 @@
 # BitEvo Agent Authority
 
-Public B9 baseline for BitEvo's seven-gate Agent Authority & Evidence model.
+Public reference package for BitEvo's seven-gate Agent Authority & Evidence model.
 
 This repository is bound to the BitEvo source revision:
 
@@ -21,15 +21,18 @@ This repository is bound to the BitEvo source revision:
 
 These are BitEvo working gates for examining one action-capable workflow. They are not presented as an external standard or as a universal security model.
 
-## Scope
+## What the reference package does
 
-The model asks whether the consequential action is explicit, bound to the intended object, owned by a defined authority, supported by required evidence before effect, checked for freshness, independently confirmed after effect, and routed into a defined constrained or recovery state when evidence becomes uncertain.
-
-A gate may be explicit, unresolved, or contradicted. Missing evidence is not converted into a positive result.
+- publishes the seven gate questions and rationales in `spec/gates.json`;
+- accepts one local JSON answer document with `YES / NO / UNKNOWN` for every gate;
+- fails closed on a missing or invalid gate answer;
+- emits unresolved `NO / UNKNOWN` gates as a local decision-gap record;
+- includes one explicitly synthetic example;
+- includes deterministic tests using the Node.js standard library.
 
 ## Boundary
 
-This repository baseline does **not**:
+The package does **not**:
 
 - produce a trust or safety score;
 - certify a workflow or organization;
@@ -42,8 +45,27 @@ This repository baseline does **not**:
 
 Written scope and Rules of Engagement remain separate from this public reference.
 
-## Publication state
+## Local use
 
-This first public baseline intentionally contains only this README. No license, package, evaluator, example payload, GitHub Action, branch-protection rule, or site integration is established by this commit.
+Requires a current Node.js runtime. The package has no third-party runtime dependencies.
 
-Any later implementation, licensing choice, `bitevo-precheck` GitHub Action, site cross-link, or repository setting change is separate work and requires its own reviewed change and applicable owner gate.
+```sh
+npm test
+npm run check:sample
+```
+
+The sample command reads `examples/synthetic-workflow.json` and prints a local JSON decision-gap record to stdout.
+
+## Files
+
+- `spec/gates.json` — seven source-bound gates and their questions/rationales.
+- `src/evaluate.mjs` — deterministic local evaluator.
+- `examples/synthetic-workflow.json` — synthetic worked input only.
+- `test/gates.test.mjs` — regression tests for gate count, boundaries and fail-closed input handling.
+- `PROVENANCE.md` — source binding for this package.
+
+## Publication boundary
+
+No license has been selected. This package contains no GitHub Action. The roadmap item for a `bitevo-precheck` GitHub Action is separate work.
+
+Any later licensing choice, GitHub Action, site cross-link, branch-protection rule or repository setting change requires its own reviewed change and applicable owner gate.

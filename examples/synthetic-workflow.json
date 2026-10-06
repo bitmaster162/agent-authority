@@ -1,0 +1,14 @@
+{
+  "schema": "bitevo.agent-authority.answers.v1",
+  "example_class": "SYNTHETIC",
+  "workflow": "synthetic-action-workflow",
+  "answers": {
+    "authority_budget": "YES",
+    "object_binding": "YES",
+    "authority_owner": "YES",
+    "evidence_before_effect": "UNKNOWN",
+    "freshness": "UNKNOWN",
+    "external_confirmation": "NO",
+    "recovery": "UNKNOWN"
+  }
+}
