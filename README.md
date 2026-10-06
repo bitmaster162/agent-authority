@@ -28,7 +28,8 @@ These are BitEvo working gates for examining one action-capable workflow. They a
 - fails closed on a missing or invalid gate answer;
 - emits unresolved `NO / UNKNOWN` gates as a local decision-gap record;
 - includes one explicitly synthetic example;
-- includes deterministic tests using the Node.js standard library.
+- includes deterministic tests using the Node.js standard library;
+- exposes the same evaluator through the `bitevo-precheck` GitHub Action without adding network calls or target-system authority.
 
 ## Boundary
 
@@ -56,16 +57,44 @@ npm run check:sample
 
 The sample command reads `examples/synthetic-workflow.json` and prints a local JSON decision-gap record to stdout.
 
+
+## GitHub Action: `bitevo-precheck`
+
+The repository-root `action.yml` wraps the same deterministic evaluator for CI.
+
+The required `answers_path` must resolve to a regular file inside `GITHUB_WORKSPACE`. The action accepts only the existing `bitevo.agent-authority.answers.v1` schema and the existing `YES / NO / UNKNOWN` gate states.
+
+Default behavior is **report-only** for valid inputs: `NO` and `UNKNOWN` remain unresolved decision gaps and are emitted as outputs and in the step summary. Set `fail_on_unresolved: "true"` only when the calling repository explicitly wants unresolved gates to fail that CI step.
+
+Example:
+
+```yaml
+permissions:
+  contents: read
+
+steps:
+  - uses: actions/checkout@<immutable-commit-sha>
+  - uses: bitmaster162/agent-authority@<reviewed-ref>
+    with:
+      answers_path: path/to/authority-answers.json
+      fail_on_unresolved: "false"
+```
+
+The Action does not require a token, secret, network request, deployment permission or write permission. A zero unresolved count is not a security certification and does not grant testing authorization.
+
 ## Files
 
 - `spec/gates.json` — seven source-bound gates and their questions/rationales.
 - `src/evaluate.mjs` — deterministic local evaluator.
 - `examples/synthetic-workflow.json` — synthetic worked input only.
+- `action.yml` — GitHub Action metadata for `bitevo-precheck`.
+- `src/action.mjs` — workspace-bound GitHub Action wrapper.
 - `test/gates.test.mjs` — regression tests for gate count, boundaries and fail-closed input handling.
+- `test/action.test.mjs` — regression tests for Action outputs, strict/report-only modes and workspace binding.
 - `PROVENANCE.md` — source binding for this package.
 
 ## Publication boundary
 
-No license has been selected. This package contains no GitHub Action. The roadmap item for a `bitevo-precheck` GitHub Action is separate work.
+No license has been selected. The `bitevo-precheck` Action is a local/deterministic wrapper around the same seven-gate evaluator; it does not add a trust score, certification, testing authorization or external execution path.
 
-Any later licensing choice, GitHub Action, site cross-link, branch-protection rule or repository setting change requires its own reviewed change and applicable owner gate.
+Any later licensing choice, Marketplace publication, release/tag, site cross-link, branch-protection rule or repository setting change requires its own reviewed change and applicable owner gate.

@@ -1,0 +1,24 @@
+name: "BitEvo Pre-Check"
+description: "Evaluate a local seven-gate answer document and report unresolved decision gaps."
+author: "BitEvo"
+
+inputs:
+  answers_path:
+    description: "Path inside GITHUB_WORKSPACE to a bitevo.agent-authority.answers.v1 JSON document."
+    required: true
+  fail_on_unresolved:
+    description: "Set to true to fail the step when any gate is NO or UNKNOWN. Default is report-only."
+    required: false
+    default: "false"
+
+outputs:
+  explicit_yes_gates:
+    description: "Number of gates answered YES."
+  unresolved_count:
+    description: "Number of gates answered NO or UNKNOWN."
+  unresolved_ids:
+    description: "Comma-separated IDs of gates answered NO or UNKNOWN."
+
+runs:
+  using: "node20"
+  main: "src/action.mjs"
