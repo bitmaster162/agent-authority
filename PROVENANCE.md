@@ -10,7 +10,7 @@ B9 seven-gate reference package source binding:
 - Verified source tree: `326ef5c262fe441370f7c02aa025d014dadbd235`
 - Gate source: `src/pages/diagnostic.astro`
 - Prepared: 2026-10-06
-- Evidence class: source-bound local candidate; not yet pushed.
+- Evidence class: source-bound public reference package; published via merged PR #1.
 
 The seven gate names, questions, rationales and `YES / NO / UNKNOWN` states are derived from that BitEvo source revision.
 
